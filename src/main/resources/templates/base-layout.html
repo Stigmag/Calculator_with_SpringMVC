@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>Calculator T1000</title>
+
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+<header>
+    <div class="navbar navbar-default navbar-fixed-top text-uppercase">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">Calculator T1000</a>
+
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container body-content span=8 offset=2">
+    <div class="well">
+        <main th:include="${view}"></main>
+    </div>
+</div>
+</body>
+<footer>
+    <div class="container modal-footer">
+        <p>Please, enter your math problem with whitespaces</p>
+        <p>Example: 5 + 2 - ( 4 * 2 - 16 / 3 ) + 15</p>
+    </div>
+</footer>
+</html>
