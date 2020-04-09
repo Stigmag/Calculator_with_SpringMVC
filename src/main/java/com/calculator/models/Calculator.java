@@ -64,8 +64,8 @@ private double result=0.0;
     }
 
    private void doOperationInBracket() {
-
-
+ if(this.listOfOperators.size()!=0)
+ {
         do {
             this.listOfNumbers.add(doOperation());
             this.listOfOperators.remove(this.listOfOperators.size() - 1);
@@ -75,31 +75,37 @@ private double result=0.0;
 
     }
 
+    }
+
    private double doOperation() {
         double result = 0.0;
 
-        switch (this.listOfOperators.get(this.listOfOperators.size() - 1)) {
-            case "+":
-                result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) + this.listOfNumbers.get(this.listOfNumbers.size() - 1);
-                break;
-            case "-":
-                result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) - this.listOfNumbers.get(this.listOfNumbers.size() - 1);
-                break;
-            case "/":
-                result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) / this.listOfNumbers.get(this.listOfNumbers.size() - 1);
-                break;
-            case "*" :
-                result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) * this.listOfNumbers.get(this.listOfNumbers.size() - 1);
-                break;
 
 
-            default:
-                throw new IllegalStateException("Unexpected value: " + this.listOfOperators.get(this.listOfOperators.size() - 1));
-        }
-        this.listOfNumbers.remove(this.listOfNumbers.size() - 1);
-        this.listOfNumbers.remove(this.listOfNumbers.size() - 1);
+           switch (this.listOfOperators.get(this.listOfOperators.size() - 1)) {
+               case "+":
+                   result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) + this.listOfNumbers.get(this.listOfNumbers.size() - 1);
+                   break;
+               case "-":
+                   result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) - this.listOfNumbers.get(this.listOfNumbers.size() - 1);
+                   break;
+               case "/":
+                   result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) / this.listOfNumbers.get(this.listOfNumbers.size() - 1);
+                   break;
+               case "*":
+                   result = this.listOfNumbers.get(this.listOfNumbers.size() - 2) * this.listOfNumbers.get(this.listOfNumbers.size() - 1);
+                   break;
 
-        return result;
+
+               default:
+                   throw new IllegalStateException("Unexpected value: " + this.listOfOperators.get(this.listOfOperators.size() - 1));
+           }
+           this.listOfNumbers.remove(this.listOfNumbers.size() - 1);
+           this.listOfNumbers.remove(this.listOfNumbers.size() - 1);
+
+
+
+       return result;
     }
 
  private boolean isDigit(String character) {
@@ -117,15 +123,19 @@ private double result=0.0;
         return character .equals("+") || character .equals("-")   || character .equals("/")|| character .equals("*") || character .equals("(") ;
     }
 
-  public void calculate() {
+  public String calculate() {
 
         fillLists(this.mathProblem);
-        while (this.listOfNumbers.size() != 1) {
-            this.listOfNumbers.add(doOperation());
-            this.listOfOperators.remove(this.listOfOperators.size() - 1);
+        if(this.listOfOperators.size()!=0 && this.listOfNumbers.size()!=0 ) {
+
+            while (this.listOfNumbers.size() != 1) {
+                this.listOfNumbers.add(doOperation());
+                this.listOfOperators.remove(this.listOfOperators.size() - 1);
+            }
+            this.result = this.listOfNumbers.get(this.listOfNumbers.size() - 1);
+            return String.valueOf(this.result);
         }
-       this.result = this.listOfNumbers.get(this.listOfNumbers.size() - 1);
-
-
+      if(this.listOfNumbers.size()==1){this.result=this.listOfNumbers.get(this.listOfNumbers.size() - 1); return String.valueOf(this.result);}
+return "Wrong format";
     }
 }

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CalculatorController {
     private int i = 0;
-    private String text;
+    private String text="";
     private UndoRedoOperation undoRedoOperation = new UndoRedoOperation();
 
     @GetMapping("/")
@@ -35,12 +35,10 @@ public class CalculatorController {
         Calculator calculator = new Calculator(mathProblem);
 
 
-        calculator.calculate();
-
 
         undoRedoOperation.getStackUndo().push(mathProblem);
 
-        model.addAttribute("result", calculator.getResult());
+        model.addAttribute("result", calculator.calculate());
 
         model.addAttribute("view", "views/calculatorForm");
         return "base-layout";
@@ -52,9 +50,15 @@ public class CalculatorController {
 
                             Model model
     ) {
+        if(undoRedoOperation.getStackUndo().isEmpty())
+        { model.addAttribute("mathProblem", "no records");
 
+            model.addAttribute("view", "views/calculatorForm");
+            return "base-layout";}
 
         text = undoRedoOperation.undo();
+
+
 
         model.addAttribute("mathProblem", text);
 
@@ -69,8 +73,13 @@ public class CalculatorController {
                             Model model
     ) {
 
+        if(undoRedoOperation.getStackRedo().isEmpty())
+        { model.addAttribute("mathProblem", "no records");
 
+            model.addAttribute("view", "views/calculatorForm");
+            return "base-layout";}
         text = undoRedoOperation.redo();
+
 
         model.addAttribute("mathProblem", text);
 
